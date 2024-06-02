@@ -4,7 +4,7 @@ const Message = ({message, senderId}) => {
   const { user, setUser } = useContext(UserContext);
   const [currUser , setCurrUser]=useState(null)
   useEffect(()=>{
-   setCurrUser(user);
+   setCurrUser(user?.user);
   },[])
 
   return (
