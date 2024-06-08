@@ -1,5 +1,4 @@
 import express from 'express'
-const app = express();
 import 'dotenv/config'
 import mongoose from 'mongoose';
 import userRouter from './routes/useroutes.js';
@@ -7,33 +6,7 @@ const port = process.env.PORT || 5000;
 import cors from 'cors'
 import cookieParser from "cookie-parser";
 import messageRouter from './routes/messageroutes.js';
-import { Server } from "socket.io";
-import {createServer} from 'http'
-
-const server = createServer(app);
-
-const io= new Server(server,{
-    cors:{
-        origin:"http://localhost:3000",
-        methods:["GET","POST"],
-        credentials:true
-    }
-})
-
-io.on("connection", (socket) => {
-    console.log("user Connected");
-    console.log(socket.id); 
-    
-    socket.on("send_message", (data) => {
-      io.emit("receive_message", data);
-    });
-  
-    socket.on("disconnect", () => {
-      console.log("user Disconnected", socket.id);
-    });
-  });
-
-
+import { app,server } from "./socket/socket.js";
 
 
 app.use(express.urlencoded({ extended: true }));

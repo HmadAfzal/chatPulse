@@ -1,38 +1,43 @@
-import React, { useEffect, useState, createContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from './pages/Home';
 import Authpage from './pages/Authpage';
-import { UserProvider } from './context/userContext';
+import { UserContext, UserProvider } from './context/userContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import { io } from 'socket.io-client';
 
-export const SocketContext = createContext();
-
 const App = () => {
-  const socket = io('http://localhost:5000');
+
   const [currUser, setCurrUser] = useState(null);
+const [socket, setSocket]=useState(null)
+  const [onlineUsers, setOnlineUsers] = useState(null);
 
   useEffect(() => {
-    const user = localStorage.getItem('user');
-    setCurrUser(user);
-  }, []);
+    const user = JSON.parse(localStorage.getItem('user'));
+    setCurrUser(user?.user);
+    if (currUser) {
+      const socket = io('http://localhost:5000', {
+        query: {
+          userId: currUser._id
+        }
+      });
+      setSocket(socket);
+      socket.on('getOnlineUsers', (onlineUsers) => {
+        setOnlineUsers(onlineUsers)
+      })
+      return socket.close();
+    }
 
-  useEffect(() => {
-    socket.on('connect', () => {
-      console.log('connected', socket.id);
-    });
   }, [socket]);
 
   return (
     <UserProvider>
-      <SocketContext.Provider value={socket}>
-        <Router>
-          <Routes>
-            <Route path='/auth' element={<Authpage />} />
-            <Route path="/" element={<ProtectedRoute Component={Home} />} />
-          </Routes>
-        </Router>
-      </SocketContext.Provider>
+      <Router>
+        <Routes>
+          <Route path='/auth' element={<Authpage />} />
+          <Route path="/" element={<ProtectedRoute Component={Home} socket={socket} setSocket={setSocket}/>} />
+        </Routes>
+      </Router>
     </UserProvider>
   );
 };

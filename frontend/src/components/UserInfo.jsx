@@ -52,7 +52,9 @@ try {
 
     <>
       <Menu>
-        <MenuButton as={Button} rightIcon={<IoIosArrowDown />}>
+        <MenuButton as={Button} rightIcon={<IoIosArrowDown />} bg={'#1e1e1e'} _hover={{
+              bg: "black",
+            }}>
           Actions
         </MenuButton>
         <MenuList>
@@ -65,7 +67,7 @@ try {
 
       <Modal isOpen={isOpen} onClose={onClose} >
         <ModalOverlay />
-        <ModalContent bg={'#68d391'} color={'black'}>
+        <ModalContent bg={'#4da39d'} color={'black'}>
           <ModalHeader>Your Info</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

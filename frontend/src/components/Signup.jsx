@@ -84,9 +84,9 @@ const Signup = () => {
                 />
                 <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
-            <Button className='w-full mt-3' bg={'#1e1e1e'}
+            <Button className='w-full mt-3' bg={'#09080A'}
                 _hover={{
-                    bg: ("black"),
+                    bg: ("blackAlpha.800"),
                 }}
                 type='submit'
             >Sign Up</Button>

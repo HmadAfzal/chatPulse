@@ -16,13 +16,13 @@ const ViewProfile = ({name, email}) => {
   return (
     <>
    
-    <div className='bg-[#93f4b8bd] rounded-md cursor-pointer px-3 py-2 hover:bg-[#93f4b8e8]'onClick={onOpen}>
+    <div className='bg-[#489893] rounded-md cursor-pointer px-3 py-2 hover:bg-[#4da39d]'onClick={onOpen}>
           <IoEyeSharp size={22} />
         </div>
 
 <Modal isOpen={isOpen} onClose={onClose} >
 <ModalOverlay  />
-<ModalContent bg={'#68d391'} color={'black'}>
+<ModalContent bg={'#4da39d'} color={'black'}>
   <ModalHeader>User Info</ModalHeader>
   <ModalCloseButton />
   <ModalBody>

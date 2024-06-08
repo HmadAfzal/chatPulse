@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from 'react';
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
@@ -8,7 +8,7 @@ const styles = {
   global: (props) => ({
     body: {
       color: mode("gray.800", "whiteAlpha.900")(props),
-      bg: mode("whiteAlpha.900", "#101010")(props),
+      bg: mode("whiteAlpha.900", "#09080A")(props),
     },
   }),
 };
@@ -21,17 +21,14 @@ const config = {
 const colors = {
   gray: {
     light: "#616161",
-    dark: "#1e1e1e",
+    dark: "#09080A",
   },
 };
 
 const theme = extendTheme({ config, styles, colors });
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-  
-
-   
+  <React.StrictMode> 
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
     

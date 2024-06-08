@@ -44,7 +44,7 @@ const [count,setCount]= useState(1)
 };
 
   return (
-    <div className='bg-[#68d391] py-2 px-6 flex items-center justify-between'>
+    <div className='bg-[#57A6A1] py-2 px-6 flex items-center justify-between'>
       <>
         <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
           <Button
@@ -59,7 +59,7 @@ const [count,setCount]= useState(1)
         </Tooltip>
         <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
           <DrawerOverlay />
-          <DrawerContent bg="#68d391">
+          <DrawerContent bg="#4da39d">
             <DrawerHeader borderBottomWidth='1px' color={'black'}>
               Search User
             </DrawerHeader>
@@ -87,7 +87,7 @@ const [count,setCount]= useState(1)
               </div>
               {searchedUser &&
                 <div
-                  className='text-black bg-[#93F4B8] px-4 py-2 rounded-lg cursor-pointer hover:bg-[#83f9b0]'
+                  className='text-black bg-[#5ED4CC] px-4 py-2 rounded-lg cursor-pointer hover:bg-[#5ccbc4]'
                   onClick={sendUserData}
                 >
                   <h3 className='font-semibold text-lg'>{searchedUser?.name}</h3>

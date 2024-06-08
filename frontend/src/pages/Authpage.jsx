@@ -6,8 +6,8 @@ const Authpage = () => {
   return (
     <Container maxW='lg' minH={'100vh'} className='flex pt-16 justify-center'>
 <Box w={'full'}>
-  <h1 className='text-5xl font-bold py-5 px-8 text-center text-black bg-[#68d391] w-full rounded-xl my-8'> ChatPulse</h1>
-  <Box className=" w-full bg-[#68d391]  rounded-xl py-6 px-8">
+  <h1 className='text-5xl font-bold py-5 px-8 text-center text-black bg-[#57A6A1] w-full rounded-xl my-8'> ChatPulse</h1>
+  <Box className=" w-full bg-[#57A6A1]  rounded-xl py-6 px-8">
       <Tabs variant='soft-rounded' isFitted  colorScheme="green">
   <TabList>
     <Tab>SignUp</Tab>

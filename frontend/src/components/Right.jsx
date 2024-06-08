@@ -4,13 +4,11 @@ import Message from './Message';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import ViewProfile from './ViewProfile';
-import { SocketContext } from '../App'; 
 import { UserContext } from '../context/userContext'
 
 
-const Right = ({ messages, name, id, email, count }) => {
+const Right = ({ messages, name, id, email, count, socket, setSocket }) => {
   const { user, setUser } = useContext(UserContext);
-  const socket = useContext(SocketContext);
   const { register, handleSubmit, resetField } = useForm();
 
   const onSubmit = async (data) => {
@@ -19,29 +17,15 @@ const Right = ({ messages, name, id, email, count }) => {
         method: 'post',
         data: data,
       });
-      socket.emit("send_message", {
-        message: data.message,
-        sender:user?.user?._id ,
-        receiver: id, 
-      });
       resetField('message');
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      messages.push(data);
-    });
-
-    return () => {
-      socket.off("receive_message");
-    };
-  }, [socket, messages]);
 
   return (
-    <div className='w-[70%] bg-[#68D391] max-h-[87vh] min-h-[87vh] rounded-lg px-4 py-6'>
+    <div className='w-[70%] bg-[#57A6A1] max-h-[87vh] min-h-[87vh] rounded-lg px-4 py-6'>
       {(count || messages.length !== 0) ? (
         <>
           <div className='flex items-center pb-4 px-6 justify-between'>
@@ -49,7 +33,7 @@ const Right = ({ messages, name, id, email, count }) => {
             <ViewProfile name={name} email={email} />
           </div>
 
-          <div className='px-4 py-2 bg-[#93f4b8] h-[75vh] rounded-lg'>
+          <div className='px-4 py-2 bg-[#5ED4CC] h-[75vh] rounded-lg'>
             <div className='w-full h-[67vh] overflow-y-auto mb-3 flex justify-end flex-col'>
               {messages.map((message, index) => (
                 <Message message={message} key={index} senderId={message?.sender?._id} />

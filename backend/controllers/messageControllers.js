@@ -1,6 +1,7 @@
 import { Chat} from "../models/chat.js";
 import { Message } from "../models/message.js";
 import { User } from "../models/user.js";
+import { getReceiverSocketId, io } from "../socket/socket.js";
 
 export const sendMessage = async (req, res) => {
   const { id } = req.params;
@@ -54,6 +55,12 @@ export const sendMessage = async (req, res) => {
         },
       }
     );
+
+const reciverSocketId=getReceiverSocketId(receiver._id);
+
+if (reciverSocketId){
+  io.to(reciverSocketId).emit("newMessage", newMessage)
+}
 
     return res.status(200).json({ message: "Message sent" });
   } catch (error) {
