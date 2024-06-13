@@ -4,25 +4,21 @@ import Message from './Message';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import ViewProfile from './ViewProfile';
-import { UserContext } from '../context/userContext'
+import { UserContext } from '../context/userContext';
 
-
-const Right = ({ messages, name, id, email, count, socket, setSocket }) => {
-  const { user, setUser } = useContext(UserContext);
+const Right = ({ messages, name, id, email, count, socket }) => {
+  const { user } = useContext(UserContext);
   const { register, handleSubmit, resetField } = useForm();
 
   const onSubmit = async (data) => {
     try {
-      await axios(`api/chat/${id}`, {
-        method: 'post',
-        data: data,
-      });
+      const response = await axios.post(`/api/chat/${id}`, data);
+      socket?.emit('sendMessage', { ...data, chatRef: id, sender: user._id, receiver: id });
       resetField('message');
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
-
 
   return (
     <div className='w-[70%] bg-[#57A6A1] max-h-[87vh] min-h-[87vh] rounded-lg px-4 py-6'>
@@ -32,14 +28,12 @@ const Right = ({ messages, name, id, email, count, socket, setSocket }) => {
             <h1 className='text-3xl font-semibold'>{name}</h1>
             <ViewProfile name={name} email={email} />
           </div>
-
           <div className='px-4 py-2 bg-[#5ED4CC] h-[75vh] rounded-lg'>
             <div className='w-full h-[67vh] overflow-y-auto mb-3 flex justify-end flex-col'>
               {messages.map((message, index) => (
-                <Message message={message} key={index} senderId={message?.sender?._id} />
+                <Message key={index} message={message} senderId={message?.sender?._id} />
               ))}
             </div>
-
             <div className='flex items-center justify-between gap-2 pb-2'>
               <Input
                 type='text'
@@ -47,18 +41,16 @@ const Right = ({ messages, name, id, email, count, socket, setSocket }) => {
                 _focus={{ borderColor: 'transparent' }}
                 color={'black'}
                 bg='#C6F6D5'
-                placeholder='enter a message...'
+                placeholder='Enter a message...'
                 {...register('message')}
               />
               <Button 
                 variant="ghost" 
                 bg={'#1e1e1e'}
-                _hover={{
-                  bg: "black",
-                }}
+                _hover={{ bg: "black" }}
                 onClick={handleSubmit(onSubmit)}
               >
-                send
+                Send
               </Button>
             </div>
           </div>
